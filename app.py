@@ -5,7 +5,6 @@ import streamlit as st
 
 def pred_array(team):
     prediction_array = []
-    # Batting Team
     if team == 'Chennai Super Kings': prediction_array = prediction_array + [1,0,0,0,0,0,0,0]
     elif team == 'Delhi Daredevils': prediction_array = prediction_array + [0,1,0,0,0,0,0,0]
     elif team == 'Kings XI Punjab': prediction_array = prediction_array + [0,0,1,0,0,0,0,0]
@@ -17,12 +16,9 @@ def pred_array(team):
     return prediction_array
 
 
-
-#SET PAGE WIDE
 st.set_page_config(page_title='Score Predictor',layout="centered")
 
-#Get the ML model 
-
+#Model loading 
 filename = 'rf_model.pkl'
 model = pickle.load(open(filename,'rb'))
 
@@ -43,14 +39,12 @@ st.markdown(
          unsafe_allow_html=True
      )
 
-#Add description
-
+#Description
 st.info("""A Simple ML Model to predict IPL Scores between teams in an ongoing match. 
  """)
 
-col1, col2 = st.columns(2)
 
-#BATTING TEAM
+col1, col2 = st.columns(2)
 
 with col1: 
     batting_team= st.selectbox('Batting Team ',('Chennai Super Kings', 'Delhi Daredevils', 'Kings XI Punjab','Kolkata Knight Riders','Mumbai Indians','Rajasthan Royals','Royal Challengers Bangalore','Sunrisers Hyderabad'))
@@ -59,8 +53,6 @@ prediction_array = pred_array(batting_team)
 
 with col2:
     bowling_team = st.selectbox('Bowling Team ',('Chennai Super Kings', 'Delhi Daredevils', 'Kings XI Punjab','Kolkata Knight Riders','Mumbai Indians','Rajasthan Royals','Royal Challengers Bangalore','Sunrisers Hyderabad'))
-    
-
 
 if bowling_team==batting_team:
     st.error('Bowling and Batting teams should be different')
@@ -81,7 +73,7 @@ with col4:
     runs = st.number_input('Current runs',min_value=0,max_value=354,step=1,format='%i')
 
 
-#Taken fallen now
+#wickets till now
 wickets =st.slider('Wickets fallen till now',0,9)
 wickets=int(wickets)
 
@@ -89,13 +81,11 @@ wickets_in_prev_5 = st.number_input('Wickets fallen in the last 5 overs',min_val
 
 runs_in_prev_5 = st.number_input('Runs scored in the last 5 overs',min_value=0,max_value=runs,step=1,format='%i')
 
-#Get all the data for predicting
-
 prediction_array = prediction_array + [runs, wickets, overs, runs_in_prev_5,wickets_in_prev_5]
 prediction_array = np.array([prediction_array])
 predict = model.predict(prediction_array)
 
-
+#Predicting
 if st.button('Predict'):
     prediction = int(round(predict[0]))
     
