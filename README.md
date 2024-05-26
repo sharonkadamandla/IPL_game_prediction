@@ -4,6 +4,6 @@ Predicts the final batting score based on batting_team, bowling_team, overs, run
 
 Using 5 different models to find the best one. 
 
-Models used are Decision Tree, Random Forest Classifier, Linear Regression, Lasso Regression, Support Vector Machine Classifier.
+Models used are Decision Tree, Random Forest, Linear Regression, Lasso Regression, Support Vector Machine Classifier.
 
 Model is hosted on Streamlit
