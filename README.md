@@ -6,4 +6,4 @@ Using 5 different models to find the best one.
 
 Models used are Decision Tree, Random Forest Classifier, Linear Regression, Lasso Regression, Support Vector Machine Classifier.
 
-Hosting the model on Streamlit
+Model is hosted on Streamlit
